@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDGE SERVER ACOUSTICS STUDY - Participant Intake Survey</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #0078d4;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .description {
+            background: #e8f4ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border-left: 4px solid #0078d4;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 25px;
+            background: #fafafa;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .section h2 {
+            color: #0078d4;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .section-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .question {
+            margin: 25px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .question-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .required {
+            color: #d13438;
+        }
+
+        .question-description {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            margin: 10px 0;
+        }
+
+        .radio-group label,
+        .checkbox-group label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .radio-group input,
+        .checkbox-group input {
+            margin-right: 8px;
+        }
+
+        .composite-field {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        .composite-field label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .submit-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        button[type="submit"] {
+            background: #0078d4;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background: #005a9e;
+        }
+
+        button[type="submit"]:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            display: none;
+            background: #dff6dd;
+            color: #107c10;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .error-message {
+            display: none;
+            background: #fde7e9;
+            color: #d13438;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading::after {
+            content: "Submitting...";
+            color: #666;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            button[type="submit"] {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EDGE SERVER ACOUSTICS STUDY</h1>
+        <p class="subtitle">Participant Intake Survey - Retail and Branch Site Workers</p>
+
+        <div class="description">
+            <p>Thank you for your interest in this study. Please complete this survey so we can confirm your eligibility and understand your work environment. It takes about 10 minutes.</p>
+            <br>
+            <p><strong>About the equipment this survey asks about:</strong> we are interested in the physical computer servers installed at the location where you work - not laptops, tablets, or cash registers. These are small-to-medium units, roughly the size of a microwave to a small refrigerator, that handle things like transactions, inventory, security cameras, or building systems on site. Throughout this survey we call them "the server equipment."</p>
+            <br>
+            <p>Your answers are confidential and will be used only to select and group participants for this study. You may skip any question you prefer not to answer.</p>
+        </div>
+
+        <div id="successMessage" class="success-message">
+            <h3>Thank you for completing the survey!</h3>
+            <p>Your responses have been submitted successfully. You can close this page.</p>
+        </div>
+
+        <form id="intakeForm" action="https://formsubmit.co/amrita.maguire@dell.com" method="POST">
+            <!-- Formsubmit configuration -->
+            <input type="hidden" name="_subject" value="Edge Acoustics Study - New Submission">
+            <input type="hidden" name="_next" value="https://asmaguire.github.io/Edge-Acoustics-Survey/?submitted=1">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+
+            <!-- Contact Information -->
+            <div class="section">
+                <h2>Contact Information</h2>
+
+                <div class="question">
+                    <label class="question-label">Full name <span class="required">*</span></label>
+                    <input type="text" name="contact_name" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Email address <span class="required">*</span></label>
+                    <input type="email" name="contact_email" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Phone number <span class="required">*</span></label>
+                    <input type="tel" name="contact_phone" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Date completed <span class="required">*</span></label>
+                    <input type="date" name="contact_date" required>
+                </div>
+            </div>
+
+            <!-- Section 1 -->
+            <div class="section">
+                <h2>SECTION 1: ABOUT YOU AND YOUR WORKPLACE</h2>
+                <p class="section-description">Please answer each question about the site where you work around the server equipment.</p>
+
+                <div class="question">
+                    <label class="question-label">Q1. What is your job title? <span class="required">*</span></label>
+                    <input type="text" name="q1" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q2. In what city and state is the work site where you work around the server equipment? <span class="required">*</span></label>
+                    <input type="text" name="q2" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q3. What type of site do you work at? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q3" value="Retail store / branch location (sales floor)" required> Retail store / branch location (sales floor)</label>
+                        <label><input type="radio" name="q3" value="Retail back-office / stockroom / distribution point"> Retail back-office / stockroom / distribution point</label>
+                        <label><input type="radio" name="q3" value="Bank or financial institution branch"> Bank or financial institution branch</label>
+                        <label><input type="radio" name="q3" value="Cinema / theatre / entertainment venue"> Cinema / theatre / entertainment venue</label>
+                        <label><input type="radio" name="q3" value="Restaurant / grocery / convenience"> Restaurant / grocery / convenience</label>
+                        <label><input type="radio" name="q3" value="Other"> Other remote or satellite office (please specify):</label>
+                    </div>
+                    <input type="text" name="q3_other" placeholder="Please specify if 'Other'">
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q4. Approximately how many people work at this site on a typical day? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q4" value="1-10" required> 1-10</label>
+                        <label><input type="radio" name="q4" value="11-25"> 11-25</label>
+                        <label><input type="radio" name="q4" value="26-50"> 26-50</label>
+                        <label><input type="radio" name="q4" value="51-100"> 51-100</label>
+                        <label><input type="radio" name="q4" value="More than 100"> More than 100</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q5. How long have you worked at this site? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q5" value="Less than 6 months" required> Less than 6 months</label>
+                        <label><input type="radio" name="q5" value="6-12 months"> 6-12 months</label>
+                        <label><input type="radio" name="q5" value="1-3 years"> 1-3 years</label>
+                        <label><input type="radio" name="q5" value="4-7 years"> 4-7 years</label>
+                        <label><input type="radio" name="q5" value="8 or more years"> 8 or more years</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q6. What is your typical work schedule at this site? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q6" value="Day shift" required> Day shift</label>
+                        <label><input type="radio" name="q6" value="Evening shift"> Evening shift</label>
+                        <label><input type="radio" name="q6" value="Overnight shift"> Overnight shift</label>
+                        <label><input type="radio" name="q6" value="Rotating / varies"> Rotating / varies</label>
+                    </div>
+                    <label style="margin-top: 10px; display: block;">Average hours on site per week:</label>
+                    <input type="number" name="q6_hours" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q7. Which best describes your role relative to the server equipment? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q7" value="I install, service, or maintain it" required> I install, service, or maintain it</label>
+                        <label><input type="radio" name="q7" value="I use systems that depend on it, but do not service it"> I use systems that depend on it, but do not service it</label>
+                        <label><input type="radio" name="q7" value="I work nearby but have no interaction with it"> I work nearby but have no interaction with it</label>
+                        <label><input type="radio" name="q7" value="I am involved in purchasing, budgeting, or planning for it"> I am involved in purchasing, budgeting, or planning for it</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q8. What is the highest level of education you have completed? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q8" value="High school / GED" required> High school / GED</label>
+                        <label><input type="radio" name="q8" value="Some college or technical training"> Some college or technical training</label>
+                        <label><input type="radio" name="q8" value="Associate degree"> Associate degree</label>
+                        <label><input type="radio" name="q8" value="Bachelor's degree"> Bachelor's degree</label>
+                        <label><input type="radio" name="q8" value="Graduate or professional degree"> Graduate or professional degree</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q9. Which of the following best describes your total annual household income? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q9" value="Under $50,000" required> Under $50,000</label>
+                        <label><input type="radio" name="q9" value="$50,000 - $74,999"> $50,000 - $74,999</label>
+                        <label><input type="radio" name="q9" value="$75,000 - $99,999"> $75,000 - $99,999</label>
+                        <label><input type="radio" name="q9" value="$100,000 - $149,999"> $100,000 - $149,999</label>
+                        <label><input type="radio" name="q9" value="$150,000 or more"> $150,000 or more</label>
+                        <label><input type="radio" name="q9" value="Prefer not to answer"> Prefer not to answer</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q10. Which of the following describes you? (Optional - select all that apply)</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="q10" value="Hispanic or Latino"> Hispanic or Latino</label>
+                        <label><input type="checkbox" name="q10" value="Black or African American"> Black or African American</label>
+                        <label><input type="checkbox" name="q10" value="White"> White</label>
+                        <label><input type="checkbox" name="q10" value="Asian"> Asian</label>
+                        <label><input type="checkbox" name="q10" value="American Indian or Alaska Native"> American Indian or Alaska Native</label>
+                        <label><input type="checkbox" name="q10" value="Native Hawaiian or Other Pacific Islander"> Native Hawaiian or Other Pacific Islander</label>
+                        <label><input type="checkbox" name="q10" value="Two or more races / Other"> Two or more races / Other</label>
+                        <label><input type="checkbox" name="q10" value="Prefer not to answer"> Prefer not to answer</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section">
+                <h2>SECTION 2: HOW CLOSE YOU WORK TO THE SERVER EQUIPMENT</h2>
+                <p class="section-description">Please estimate distances as accurately as you can. If you are able, pace the distance out at work before answering.</p>
+
+                <div class="question">
+                    <label class="question-label">Q11. Think about the spot where you spend the largest share of your workday. From that spot, how far away is the nearest server or server enclosure? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q11" value="Less than 5 feet" required> Less than 5 feet</label>
+                        <label><input type="radio" name="q11" value="5-10 feet"> 5-10 feet</label>
+                        <label><input type="radio" name="q11" value="11-20 feet"> 11-20 feet</label>
+                        <label><input type="radio" name="q11" value="21-30 feet"> 21-30 feet</label>
+                        <label><input type="radio" name="q11" value="31-50 feet"> 31-50 feet</label>
+                        <label><input type="radio" name="q11" value="More than 50 feet"> More than 50 feet</label>
+                    </div>
+                    <label style="margin-top: 10px; display: block;">Your estimate, in feet:</label>
+                    <input type="number" name="q11_estimate">
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q12. At the closest point in your workday, how near do you get to the server equipment? <span class="required">*</span></label>
+                    <label style="display: block; margin-bottom: 5px;">Closest distance, in feet:</label>
+                    <input type="number" name="q12_distance" required>
+                    <label style="display: block; margin-top: 10px; margin-bottom: 5px;">How often are you that close?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q12" value="Continuously / most of the shift" required> Continuously / most of the shift</label>
+                        <label><input type="radio" name="q12" value="Several times a day"> Several times a day</label>
+                        <label><input type="radio" name="q12" value="About once a day"> About once a day</label>
+                        <label><input type="radio" name="q12" value="A few times a week"> A few times a week</label>
+                        <label><input type="radio" name="q12" value="Less than weekly"> Less than weekly</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q13. What separates you from the server equipment during a typical workday? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q13" value="Nothing - same open room, no barrier" required> Nothing - same open room, no barrier</label>
+                        <label><input type="radio" name="q13" value="Same room, behind a partition, shelving, or counter"> Same room, behind a partition, shelving, or counter</label>
+                        <label><input type="radio" name="q13" value="In a closet, cage, or rack room with the door usually open"> In a closet, cage, or rack room with the door usually open</label>
+                        <label><input type="radio" name="q13" value="In a closet, cage, or rack room with the door usually closed"> In a closet, cage, or rack room with the door usually closed</label>
+                        <label><input type="radio" name="q13" value="In an adjacent room, through a solid wall"> In an adjacent room, through a solid wall</label>
+                        <label><input type="radio" name="q13" value="Other"> Other (please specify):</label>
+                    </div>
+                    <input type="text" name="q13_other" placeholder="Please specify if 'Other'">
+                    <label style="display: block; margin-top: 10px;">Do you have direct line of sight to the server equipment from where you work?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q13_line_of_sight" value="Yes" required> Yes</label>
+                        <label><input type="radio" name="q13_line_of_sight" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q14. How is the server equipment installed at your site? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="q14" value="Open rack"> Open rack</label>
+                        <label><input type="checkbox" name="q14" value="Enclosed cabinet or cage"> Enclosed cabinet or cage</label>
+                        <label><input type="checkbox" name="q14" value="Wall-mounted"> Wall-mounted</label>
+                        <label><input type="checkbox" name="q14" value="Sitting on a desk, counter, or shelf"> Sitting on a desk, counter, or shelf</label>
+                        <label><input type="checkbox" name="q14" value="Under a desk or counter"> Under a desk or counter</label>
+                        <label><input type="checkbox" name="q14" value="In a ceiling space or wiring closet"> In a ceiling space or wiring closet</label>
+                        <label><input type="checkbox" name="q14" value="Not sure"> Not sure</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q15. Over a typical shift, roughly how many hours do you spend at each of these distances from an operating server? (Your hours should add up to the length of your shift) <span class="required">*</span></label>
+                    <div class="composite-field">
+                        <label>Within 10 feet - number of hours:</label>
+                        <input type="number" name="q15_within_10" step="0.5" required>
+                    </div>
+                    <div class="composite-field">
+                        <label>10-30 feet - number of hours:</label>
+                        <input type="number" name="q15_10_30" step="0.5" required>
+                    </div>
+                    <div class="composite-field">
+                        <label>More than 30 feet - number of hours:</label>
+                        <input type="number" name="q15_more_30" step="0.5" required>
+                    </div>
+                    <div class="composite-field">
+                        <label>Total length of your shift, in hours:</label>
+                        <input type="number" name="q15_total" step="0.5" required>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q16. Is the area where the server equipment sits air conditioned, ventilated, or cooled separately from the rest of your work area? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q16" value="Yes - it has its own cooling or ventilation" required> Yes - it has its own cooling or ventilation</label>
+                        <label><input type="radio" name="q16" value="No - same air as the rest of the space"> No - same air as the rest of the space</label>
+                        <label><input type="radio" name="q16" value="Not sure"> Not sure</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q17. Have you ever been asked to move, relocate, or change where you work because of the noise or heat from this equipment? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q17" value="Yes" required> Yes (please describe):</label>
+                        <label><input type="radio" name="q17" value="No"> No</label>
+                    </div>
+                    <input type="text" name="q17_description" placeholder="Please describe if 'Yes'">
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="section">
+                <h2>SECTION 3: SERVER LOCATION AND NOISE</h2>
+                <p class="section-description">Where space is provided, please answer in your own words.</p>
+
+                <div class="question">
+                    <label class="question-label">Q18. Where does your company have IT infrastructure deployed? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="q18" value="ROBOs (remote office/branch offices)"> ROBOs (remote office/branch offices)</label>
+                        <label><input type="checkbox" name="q18" value="Locations where we serve customers/clients"> Locations where we serve customers/clients</label>
+                        <label><input type="checkbox" name="q18" value="Physical locations outside of a traditional datacenter environment"> Physical locations outside of a traditional datacenter environment including manufacturing facilities, warehouse and logistic centers, retail stores, etc.</label>
+                        <label><input type="checkbox" name="q18" value="Edge sites"> Edge sites</label>
+                        <label><input type="checkbox" name="q18" value="A central data center or corporate headquarters"> A central data center or corporate headquarters</label>
+                        <label><input type="checkbox" name="q18" value="Not sure"> Not sure</label>
+                    </div>
+                    <label style="display: block; margin-top: 10px;">Which of these describes your own work site?</label>
+                    <input type="text" name="q18_site_type" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q19. Where are the Edge servers at your site typically located, and why do you think they were put there? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q19" value="Secured IT closet or wiring closet (locked / restricted access)" required> Secured IT closet or wiring closet (locked / restricted access)</label>
+                        <label><input type="radio" name="q19" value="Dedicated server room"> Dedicated server room</label>
+                        <label><input type="radio" name="q19" value="Back office or manager's office"> Back office or manager's office</label>
+                        <label><input type="radio" name="q19" value="Stockroom or storage area"> Stockroom or storage area</label>
+                        <label><input type="radio" name="q19" value="Break room"> Break room</label>
+                        <label><input type="radio" name="q19" value="A location customers can see or walk past"> A location customers can see or walk past</label>
+                        <label><input type="radio" name="q19" value="Under or behind a counter on the sales floor"> Under or behind a counter on the sales floor</label>
+                        <label><input type="radio" name="q19" value="Other"> Other (please specify):</label>
+                    </div>
+                    <input type="text" name="q19_other" placeholder="Please specify if 'Other'">
+                    <label style="display: block; margin-top: 10px;">Why do you think it is located there?</label>
+                    <input type="text" name="q19_reason" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q20. What is the shortest physical distance between your Edge server(s) and a location where customers and employees gather? <span class="required">*</span></label>
+                    <p class="question-description">By "gather" we mean a checkout line, service counter, waiting area, break room, lobby, or cluster of workstations - not a spot people only walk past.</p>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q20" value="Less than 5 feet" required> Less than 5 feet</label>
+                        <label><input type="radio" name="q20" value="6-10 feet"> 6-10 feet</label>
+                        <label><input type="radio" name="q20" value="11-15 feet"> 11-15 feet</label>
+                        <label><input type="radio" name="q20" value="16-20 feet"> 16-20 feet</label>
+                        <label><input type="radio" name="q20" value="More than 20 feet"> More than 20 feet</label>
+                        <label><input type="radio" name="q20" value="Don't know"> Don't know</label>
+                    </div>
+                    <label style="display: block; margin-top: 10px;">Which gathering location is that?</label>
+                    <input type="text" name="q20_location">
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q21. What best describes the interaction of Edge servers with employees and customers? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q21" value="Hidden from both employees and customers" required> Hidden from both employees and customers</label>
+                        <label><input type="radio" name="q21" value="Visible only to employees"> Visible only to employees</label>
+                        <label><input type="radio" name="q21" value="Somewhat visible to employees and customers"> Somewhat visible to employees and customers</label>
+                        <label><input type="radio" name="q21" value="Clearly visible to both"> Clearly visible to both</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q22. Can employees or customers HEAR the Edge server from that gathering location, even if they cannot see it? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q22" value="Yes - employees can hear it" required> Yes - employees can hear it</label>
+                        <label><input type="radio" name="q22" value="Yes - customers can hear it"> Yes - customers can hear it</label>
+                        <label><input type="radio" name="q22" value="Yes - both can hear it"> Yes - both can hear it</label>
+                        <label><input type="radio" name="q22" value="No - it cannot be heard from there"> No - it cannot be heard from there</label>
+                        <label><input type="radio" name="q22" value="Don't know"> Don't know</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q23. Which of the following terms have you actually heard used at your workplace to describe it? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="q23" value="Edge servers"> Edge servers</label>
+                        <label><input type="checkbox" name="q23" value="Servers at remote sites"> Servers at remote sites</label>
+                        <label><input type="checkbox" name="q23" value="Servers at Edge deployments"> Servers at Edge deployments</label>
+                        <label><input type="checkbox" name="q23" value="The server, the server room, or 'the server in the back'"> The server, the server room, or "the server in the back"</label>
+                        <label><input type="checkbox" name="q23" value="A brand or model name"> A brand or model name (e.g. Dell, PowerEdge, HPE):</label>
+                        <label><input type="checkbox" name="q23" value="The rack"> The rack</label>
+                        <label><input type="checkbox" name="q23" value="The computer, the box, or the system"> The computer, the box, or the system</label>
+                        <label><input type="checkbox" name="q23" value="None of these - we call it something else"> None of these - we call it something else:</label>
+                        <label><input type="checkbox" name="q23" value="We don't really have a name for it"> We don't really have a name for it</label>
+                    </div>
+                    <input type="text" name="q23_other" placeholder="Please specify if applicable">
+                    <label style="display: block; margin-top: 10px;">Which one of these is used most often at your site?</label>
+                    <input type="text" name="q23_most_common" required>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q24. In your own words, how would you describe the noise or sound of the server equipment at your site? <span class="required">*</span></label>
+                    <p class="question-description">For example: whirring, humming, roaring, jet-like, clicking, rising and falling, constant or intermittent.</p>
+                    <textarea name="q24" required></textarea>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q25. How often does the server noise distract or disrupt people at your site? <span class="required">*</span></label>
+                    <div class="composite-field">
+                        <label>EMPLOYEES:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q25_employees" value="Several times a day" required> Several times a day</label>
+                            <label><input type="radio" name="q25_employees" value="Daily"> Daily</label>
+                            <label><input type="radio" name="q25_employees" value="A few times a week"> A few times a week</label>
+                            <label><input type="radio" name="q25_employees" value="Occasionally"> Occasionally</label>
+                            <label><input type="radio" name="q25_employees" value="Never"> Never</label>
+                        </div>
+                    </div>
+                    <div class="composite-field">
+                        <label>CUSTOMERS OR VISITORS:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="q25_customers" value="Several times a day" required> Several times a day</label>
+                            <label><input type="radio" name="q25_customers" value="Daily"> Daily</label>
+                            <label><input type="radio" name="q25_customers" value="A few times a week"> A few times a week</label>
+                            <label><input type="radio" name="q25_customers" value="Occasionally"> Occasionally</label>
+                            <label><input type="radio" name="q25_customers" value="Never"> Never</label>
+                            <label><input type="radio" name="q25_customers" value="Not applicable - customers cannot hear it"> Not applicable - customers cannot hear it</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q26. Has anyone at your site ever complained about the server noise? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="q26" value="Yes - employees have complained" required> Yes - employees have complained</label>
+                        <label><input type="radio" name="q26" value="Yes - customers have complained"> Yes - customers have complained</label>
+                        <label><input type="radio" name="q26" value="Yes - both"> Yes - both</label>
+                        <label><input type="radio" name="q26" value="No"> No</label>
+                        <label><input type="radio" name="q26" value="Not sure"> Not sure</label>
+                    </div>
+                    <label style="display: block; margin-top: 10px;">If yes: what happened, and who did the complaint go to?</label>
+                    <textarea name="q26_details"></textarea>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Q27. What, if anything, has been done at your site to deal with the server noise? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="q27" value="Nothing"> Nothing</label>
+                        <label><input type="checkbox" name="q27" value="Moved the equipment to a different room or area"> Moved the equipment to a different room or area</label>
+                        <label><input type="checkbox" name="q27" value="Closed or added a door to the closet or room"> Closed or added a door to the closet or room</label>
+                        <label><input type="checkbox" name="q27" value="Added soundproofing, padding, or an enclosure"> Added soundproofing, padding, or an enclosure</label>
+                        <label><input type="checkbox" name="q27" value="Moved people's work areas away from it"> Moved people's work areas away from it</label>
+                        <label><input type="checkbox" name="q27" value="Replaced the equipment with something quieter"> Replaced the equipment with something quieter</label>
+                        <label><input type="checkbox" name="q27" value="Told to live with it"> Told to live with it</label>
+                        <label><input type="checkbox" name="q27" value="Not sure"> Not sure</label>
+                    </div>
+                    <label style="display: block; margin-top: 10px;">Details:</label>
+                    <textarea name="q27_details"></textarea>
+                </div>
+            </div>
+
+            <!-- Submitting Section -->
+            <div class="section">
+                <h2>SUBMITTING THIS FORM</h2>
+                <p class="section-description">Thank you for completing the survey. When you're ready, click "Submit Survey" below to send your responses to the study team.</p>
+
+                <div class="question">
+                    <label class="question-label">Q28. Is there anything else about the server equipment at your workplace, or about the noise it makes, that you think we should know?</label>
+                    <textarea name="q28"></textarea>
+                </div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" id="submitBtn">Submit Survey</button>
+            </div>
+
+            <div class="loading" id="loading"></div>
+
+            <div id="errorMessage" class="error-message">
+                <h3>Error</h3>
+                <p id="errorText">There was an error submitting your response. Please try again.</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('intakeForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', function(e) {
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Form will submit normally to Formsubmit
+            // Formsubmit will handle the submission and redirect back to ?submitted=1
+        });
+
+        // Show the thank-you message when Formsubmit redirects back after a submission
+        if (new URLSearchParams(window.location.search).get('submitted') === '1') {
+            form.style.display = 'none';
+            document.querySelector('.description').style.display = 'none';
+            successMessage.style.display = 'block';
+        }
+
+        // Re-enable the button if the participant comes back with the browser's Back button
+        window.addEventListener('pageshow', function() {
+            submitBtn.disabled = false;
+            loading.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
